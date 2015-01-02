@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+
+// include the composer autoloader
+require_once __DIR__ . '/../vendor/autoload.php'; 
+
+// import the Symfony Console Application 
+use Symfony\Component\Console\Application;
+use Nemesis\Command\HelloCommand;
+
+$app = new Application();
+$app->add(new HelloCommand());
+$app->run();
+?>

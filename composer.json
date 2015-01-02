@@ -1,0 +1,14 @@
+{
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/console": "2.6.x-dev",
+        "symfony/event-dispatcher": "2.6.x-dev",
+        "symfony/process": "2.6.x-dev",
+        "psr/log": "1.0.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
+}
