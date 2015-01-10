@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Nemesis\Helpers\Logger;
 
 class ProfileCommand extends Command {
 
@@ -33,6 +34,9 @@ class ProfileCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $logger = new Logger($output);
+
+
         $inpFileName = $input->getArgument('filename');
         if (!$inpFileName) {
             $inpFileName = __DIR__ . '/../../../test/example.curl';
@@ -73,6 +77,6 @@ class ProfileCommand extends Command {
         fclose($handle);
 
         //TODO: Report Success
-        $output->writeln('end');
+        $logger->logInfo('end');
     }
 }
