@@ -7,8 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-//use Symfony\Component\Console\Logger\ConsoleLogger;
-//use Psr\Log\LogLevel;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Nemesis\Helpers\Logger;
 
 class ProfileCommand extends Command {
@@ -69,6 +68,20 @@ class ProfileCommand extends Command {
         $json = json_encode($json);
 
         $outFileName = __DIR__ . '/../../../profiles/' . $profile . '.json';
+
+        if (file_exists($outFileName))
+        {
+            $helper = $this->getHelper('question');
+            $question = new ConfirmationQuestion('File ' . $outFileName . 'already exists. Overwrite (Y/n)? ', true);
+
+            if (!$helper->ask($input, $output, $question)) {
+                $logger->info('Aborted');
+                return;
+            }
+        }
+
+
+
         $logger->info('Saving profile to ' . $outFileName);
 
         $handle = fopen($outFileName,'w');
