@@ -43,6 +43,7 @@ class ProfileCommand extends Command {
             $inpFileName = __DIR__ . '/../../../test/example.curl';
         }
 
+        $logger->info('Reading ' . $inpFileName);
         $handle = fopen($inpFileName, "r");
         $contents = fread($handle, filesize($inpFileName));
         fclose($handle);
@@ -51,21 +52,24 @@ class ProfileCommand extends Command {
         rsort($profile);
         $profile = $profile[0];
 
-        $prepJson = Array();
+        $logger->info('Generating profile "' . $profile . '"');
+
+        $json = Array();
 
         foreach($this->pattern as $key => $curmuster){
 
             $success = preg_match_all($curmuster, $contents, $matches);
 
             foreach ($matches[0] as $match) {
-                $prepJson[$key][] = ($match);
+                $json[$key][] = ($match);
                 $logger->debug("$key: " . $match);
             }
         }
 
-        $json = json_encode($prepJson);
+        $json = json_encode($json);
 
         $outFileName = __DIR__ . '/../../../profiles/' . $profile . '.json';
+        $logger->info('Saving profile to ' . $outFileName);
 
         $handle = fopen($outFileName,'w');
         $success = fwrite  ($handle, $json);
@@ -78,6 +82,6 @@ class ProfileCommand extends Command {
         fclose($handle);
 
         //TODO: Report Success
-        $logger->info('end');
+        $logger->info('Done');
     }
 }
