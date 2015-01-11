@@ -7,6 +7,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+//use Symfony\Component\Console\Logger\ConsoleLogger;
+//use Psr\Log\LogLevel;
 use Nemesis\Helpers\Logger;
 
 class ProfileCommand extends Command {
@@ -36,7 +38,6 @@ class ProfileCommand extends Command {
     {
         $logger = new Logger($output);
 
-
         $inpFileName = $input->getArgument('filename');
         if (!$inpFileName) {
             $inpFileName = __DIR__ . '/../../../test/example.curl';
@@ -58,7 +59,7 @@ class ProfileCommand extends Command {
 
             foreach ($matches[0] as $match) {
                 $prepJson[$key][] = ($match);
-                echo "$key: " . $match . PHP_EOL;
+                $logger->debug("$key: " . $match);
             }
         }
 
@@ -77,6 +78,6 @@ class ProfileCommand extends Command {
         fclose($handle);
 
         //TODO: Report Success
-        $logger->logInfo('end');
+        $logger->info('end');
     }
 }
