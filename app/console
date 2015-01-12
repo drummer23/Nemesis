@@ -11,5 +11,6 @@ use Nemesis\Command\HelloCommand;
 
 $app = new Application();
 $app->add(new HelloCommand());
+$app->add(new \Nemesis\Command\ProfileCommand());
 $app->run();
 ?>
